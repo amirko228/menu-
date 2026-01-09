@@ -1,0 +1,39 @@
+/**
+ * Оптимизация для touch-устройств (планшеты официантов)
+ */
+
+/* Улучшение отзывчивости touch-событий */
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  touch-action: manipulation;
+}
+
+/* Крупные области для нажатия */
+button,
+a,
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 12px 16px;
+}
+
+/* Улучшение видимости фокуса для доступности */
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+/* Плавные анимации для лучшего UX */
+.transition-smooth {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Оптимизация для больших экранов планшетов */
+@media (min-width: 768px) {
+  .touch-optimized {
+    min-height: 52px;
+    padding: 14px 20px;
+  }
+}
+
