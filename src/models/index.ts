@@ -7,4 +7,5 @@ export * from './Table';
 export * from './VipCabin';
 export * from './Reservation';
 export * from './Order';
+export * from './OrderItem';
 

@@ -1,5 +1,6 @@
 import { Table } from '../models/Table';
 import { getTableStatusColor, getTableStatusText } from '../utils/statusColors';
+import { useTouchDrag } from '../hooks/useTouchDrag';
 
 interface EditableTableCardProps {
   table: Table;
@@ -28,9 +29,23 @@ const EditableTableCard = ({
   const statusColor = getTableStatusColor(table.status);
   const statusText = getTableStatusText(table.status);
 
+  // Touch drag для мобильных устройств
+  const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchDrag(
+    (id) => {
+      // Создаем синтетическое событие для совместимости
+      const syntheticEvent = {
+        dataTransfer: { effectAllowed: 'move', setData: () => {} },
+      } as React.DragEvent;
+      onDragStart(syntheticEvent, id);
+    },
+    onDragEnd,
+    onDrop
+  );
+
   return (
     <div
       draggable={isEditMode}
+      data-drag-id={table.id}
       onDragStart={(e) => onDragStart(e, table.id)}
       onDragEnd={onDragEnd}
       onDragOver={isEditMode ? (e) => e.preventDefault() : undefined}
@@ -43,6 +58,9 @@ const EditableTableCard = ({
             }
           : undefined
       }
+      onTouchStart={isEditMode ? (e) => handleTouchStart(e, table.id) : undefined}
+      onTouchMove={isEditMode ? handleTouchMove : undefined}
+      onTouchEnd={isEditMode ? handleTouchEnd : undefined}
       onClick={onClick}
       className={`
         relative bg-white rounded-xl shadow-md p-4

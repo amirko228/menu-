@@ -15,6 +15,9 @@ export { default as EditableVipCabinCard } from './EditableVipCabinCard';
 export { default as AddTableForm } from './AddTableForm';
 export { default as AddVipCabinForm } from './AddVipCabinForm';
 export { default as EditItemForm } from './EditItemForm';
+export { default as OrderCard } from './OrderCard';
+export { default as OrderForm } from './OrderForm';
+export { default as InstallPWA } from './InstallPWA';
 
 // UI компоненты
 export { default as Button } from './ui/Button';

@@ -1,5 +1,6 @@
 import { VipCabin } from '../models/VipCabin';
 import { getVipCabinStatusColor, getVipCabinStatusText } from '../utils/statusColors';
+import { useTouchDrag } from '../hooks/useTouchDrag';
 
 interface EditableVipCabinCardProps {
   cabin: VipCabin;
@@ -28,9 +29,23 @@ const EditableVipCabinCard = ({
   const statusColor = getVipCabinStatusColor(cabin.status);
   const statusText = getVipCabinStatusText(cabin.status);
 
+  // Touch drag для мобильных устройств
+  const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchDrag(
+    (id) => {
+      // Создаем синтетическое событие для совместимости
+      const syntheticEvent = {
+        dataTransfer: { effectAllowed: 'move', setData: () => {} },
+      } as React.DragEvent;
+      onDragStart(syntheticEvent, id);
+    },
+    onDragEnd,
+    onDrop
+  );
+
   return (
     <div
       draggable={isEditMode}
+      data-drag-id={cabin.id}
       onDragStart={(e) => onDragStart(e, cabin.id)}
       onDragEnd={onDragEnd}
       onDragOver={isEditMode ? (e) => e.preventDefault() : undefined}
@@ -43,6 +58,9 @@ const EditableVipCabinCard = ({
             }
           : undefined
       }
+      onTouchStart={isEditMode ? (e) => handleTouchStart(e, cabin.id) : undefined}
+      onTouchMove={isEditMode ? handleTouchMove : undefined}
+      onTouchEnd={isEditMode ? handleTouchEnd : undefined}
       onClick={onClick}
       className={`
         relative bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl shadow-md p-4

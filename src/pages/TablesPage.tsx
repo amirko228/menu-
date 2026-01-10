@@ -7,7 +7,8 @@ import EditableVipCabinCard from '../components/EditableVipCabinCard';
 import AddTableForm from '../components/AddTableForm';
 import AddVipCabinForm from '../components/AddVipCabinForm';
 import EditItemForm from '../components/EditItemForm';
-import { tablesRepository, vipCabinsRepository } from '../services';
+import { useNavigate } from 'react-router-dom';
+import { tablesRepository, vipCabinsRepository, ordersRepository } from '../services';
 import { Table, TableStatus } from '../models/Table';
 import { VipCabin, VipCabinStatus } from '../models/VipCabin';
 
@@ -15,6 +16,7 @@ import { VipCabin, VipCabinStatus } from '../models/VipCabin';
  * Главный экран - визуальная схема зала со столами и VIP-кабинами
  */
 const TablesPage = () => {
+  const navigate = useNavigate();
   const [isEditMode, setIsEditMode] = useState(false);
   const [tables, setTables] = useState<Table[]>([]);
   const [vipCabins, setVipCabins] = useState<VipCabin[]>([]);
@@ -23,6 +25,16 @@ const TablesPage = () => {
   useEffect(() => {
     setTables(tablesRepository.getAll());
     setVipCabins(vipCabinsRepository.getAll());
+  }, []);
+
+  // Обновление данных при изменении заказов (для отображения индикаторов)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTables(tablesRepository.getAll());
+      setVipCabins(vipCabinsRepository.getAll());
+    }, 5000); // Обновляем каждые 5 секунд
+
+    return () => clearInterval(interval);
   }, []);
   const [draggedItem, setDraggedItem] = useState<{ type: 'table' | 'vip_cabin'; id: string } | null>(null);
   const [showAddTableForm, setShowAddTableForm] = useState(false);
@@ -235,13 +247,29 @@ const TablesPage = () => {
 
   const handleTableClick = (tableId: string) => {
     if (!isEditMode) {
-      console.log('Table clicked:', tableId);
+      // Проверяем, есть ли активный заказ для этого стола
+      const activeOrder = ordersRepository.getActiveOrderByTableId(tableId);
+      if (activeOrder) {
+        // Переходим на страницу заказов с открытым заказом
+        navigate('/orders', { state: { orderId: activeOrder.id } });
+      } else {
+        // Переходим на страницу заказов для создания нового заказа
+        navigate('/orders', { state: { tableId } });
+      }
     }
   };
 
   const handleCabinClick = (cabinId: string) => {
     if (!isEditMode) {
-      console.log('VIP Cabin clicked:', cabinId);
+      // Проверяем, есть ли активный заказ для этой кабины
+      const activeOrder = ordersRepository.getActiveOrderByVipCabinId(cabinId);
+      if (activeOrder) {
+        // Переходим на страницу заказов с открытым заказом
+        navigate('/orders', { state: { orderId: activeOrder.id } });
+      } else {
+        // Переходим на страницу заказов для создания нового заказа
+        navigate('/orders', { state: { vipCabinId: cabinId } });
+      }
     }
   };
 
@@ -329,6 +357,7 @@ const TablesPage = () => {
                   key={table.id}
                   table={table}
                   onClick={() => handleTableClick(table.id)}
+                  hasActiveOrder={!!ordersRepository.getActiveOrderByTableId(table.id)}
                 />
               )
             )}
@@ -364,6 +393,7 @@ const TablesPage = () => {
                   key={cabin.id}
                   cabin={cabin}
                   onClick={() => handleCabinClick(cabin.id)}
+                  hasActiveOrder={!!ordersRepository.getActiveOrderByVipCabinId(cabin.id)}
                 />
               )
             )}

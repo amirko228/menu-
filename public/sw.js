@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cafe-menu-pwa-v1';
+const CACHE_NAME = 'cafe-menu-pwa-v2';
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
@@ -29,23 +29,30 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  // Для навигационных запросов (HTML страницы) всегда возвращаем index.html
+  const url = new URL(event.request.url);
+  
+  // Для навигационных запросов (HTML) всегда возвращаем index.html
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match('/index.html'))
+      caches.match('/index.html').then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        return fetch(event.request).catch(() => caches.match('/index.html'));
+      })
     );
     return;
   }
 
-  // Для остальных запросов используем cache-first стратегию
+  // Для остальных ресурсов используем cache-first стратегию
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
         return cachedResponse;
       }
-
+      
       return fetch(event.request).then(async (response) => {
-        // Кешируем только успешные GET запросы
+        // Кешируем только успешные ответы
         if (response && response.status === 200 && response.type === 'basic') {
           const responseClone = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
@@ -54,7 +61,7 @@ self.addEventListener('fetch', (event) => {
         }
         return response;
       }).catch(() => {
-        // Если запрос не найден и это HTML, возвращаем index.html для SPA роутинга
+        // Если запрос не удался и это HTML, возвращаем index.html
         if (event.request.headers.get('accept')?.includes('text/html')) {
           return caches.match('/index.html');
         }
