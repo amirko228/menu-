@@ -32,10 +32,14 @@ const EditableTableCard = ({
   // Touch drag для мобильных устройств
   const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchDrag(
     (id) => {
-      // Создаем синтетическое событие для совместимости
+      // Для touch событий просто вызываем onDragStart с минимальными данными
+      // Создаем минимальный объект события
       const syntheticEvent = {
-        dataTransfer: { effectAllowed: 'move', setData: () => {} },
-      } as React.DragEvent;
+        dataTransfer: {
+          effectAllowed: 'move' as DataTransfer['effectAllowed'],
+          setData: () => {},
+        },
+      } as unknown as React.DragEvent;
       onDragStart(syntheticEvent, id);
     },
     onDragEnd,

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Order, OrderItem } from '../models/Order';
+import { Order } from '../models/Order';
+import { OrderItem } from '../models/OrderItem';
 import { Dish } from '../models/Dish';
 import { Table } from '../models/Table';
 import { VipCabin } from '../models/VipCabin';
-import { dishesRepository } from '../services';
 
 interface OrderFormProps {
   order?: Order;
