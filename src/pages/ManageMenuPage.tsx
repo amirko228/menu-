@@ -208,11 +208,6 @@ const ManageMenuPage = () => {
     setShowDeleteCategoryConfirm(null);
   };
 
-  // Получение категории по ID
-  const getCategoryById = (categoryId: string) => {
-    return categories.find((cat) => cat.id === categoryId);
-  };
-
   // Сортировка категорий
   const sortedCategories = useMemo(() => {
     return [...categories].sort((a, b) => a.sortOrder - b.sortOrder);
