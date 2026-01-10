@@ -8,6 +8,7 @@ const STORAGE_KEYS = {
   TABLES: 'cafe-admin-tables',
   VIP_CABINS: 'cafe-admin-vip-cabins',
   RESERVATIONS: 'cafe-admin-reservations',
+  ORDERS: 'cafe-admin-orders',
 } as const;
 
 /**

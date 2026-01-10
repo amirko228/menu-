@@ -7,4 +7,5 @@ export * from './categoriesRepository';
 export * from './tablesRepository';
 export * from './vipCabinsRepository';
 export * from './reservationsRepository';
+export * from './ordersRepository';
 

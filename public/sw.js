@@ -29,16 +29,38 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
+  // Для навигационных запросов (HTML страницы) всегда возвращаем index.html
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match('/index.html'))
+    );
+    return;
+  }
+
+  // Для остальных запросов используем cache-first стратегию
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) =>
-      cachedResponse || fetch(event.request).then(async (response) => {
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return fetch(event.request).then(async (response) => {
+        // Кешируем только успешные GET запросы
         if (response && response.status === 200 && response.type === 'basic') {
           const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
         }
         return response;
-      }).catch(() => caches.match('/'))
-    )
+      }).catch(() => {
+        // Если запрос не найден и это HTML, возвращаем index.html для SPA роутинга
+        if (event.request.headers.get('accept')?.includes('text/html')) {
+          return caches.match('/index.html');
+        }
+        return new Response('Offline', { status: 503 });
+      });
+    })
   );
 });
 
