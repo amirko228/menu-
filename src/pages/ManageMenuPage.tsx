@@ -222,14 +222,16 @@ const ManageMenuPage = () => {
           <h1 className="text-2xl sm:text-3xl font-medium text-slate-900 tracking-tight">Управление меню</h1>
           <div className="flex gap-2">
             <button
+              type="button"
               onClick={handleAddDish}
-              className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium text-sm"
+              className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium text-sm cursor-pointer"
             >
               + Добавить блюдо
             </button>
             <button
+              type="button"
               onClick={handleAddCategory}
-              className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium text-sm"
+              className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium text-sm cursor-pointer"
             >
               + Добавить категорию
             </button>
@@ -252,8 +254,9 @@ const ManageMenuPage = () => {
                   </div>
                   <div className="flex gap-1">
                     <button
+                      type="button"
                       onClick={() => handleEditCategory(category)}
-                      className="p-1.5 text-sky-600 hover:bg-sky-50 rounded-lg transition-colors"
+                      className="p-1.5 text-sky-600 hover:bg-sky-50 rounded-lg transition-colors cursor-pointer"
                       title="Редактировать"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -266,8 +269,9 @@ const ManageMenuPage = () => {
                       </svg>
                     </button>
                     <button
+                      type="button"
                       onClick={() => setShowDeleteCategoryConfirm(category.id)}
-                      className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                      className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                       title="Удалить"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -321,8 +325,9 @@ const ManageMenuPage = () => {
                         </div>
                         <div className="flex gap-1 ml-2">
                           <button
+                            type="button"
                             onClick={() => handleEditDish(dish)}
-                            className="p-1.5 text-sky-600 hover:bg-sky-50 rounded-lg transition-colors"
+                            className="p-1.5 text-sky-600 hover:bg-sky-50 rounded-lg transition-colors cursor-pointer"
                             title="Редактировать"
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -335,8 +340,9 @@ const ManageMenuPage = () => {
                             </svg>
                           </button>
                           <button
+                            type="button"
                             onClick={() => setShowDeleteDishConfirm(dish.id)}
-                            className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                            className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                             title="Удалить"
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -354,6 +360,7 @@ const ManageMenuPage = () => {
                       <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
                         <span className="text-xs text-slate-500">В стоп-листе</span>
                         <button
+                          type="button"
                           onClick={() => {
                             const updatedDish: Dish = {
                               ...dish,
@@ -363,7 +370,7 @@ const ManageMenuPage = () => {
                             dishesRepository.update(updatedDish);
                             setDishes(dishesRepository.getAll());
                           }}
-                          className={`px-2 py-1 text-xs rounded-md border transition-colors ${
+                          className={`px-2 py-1 text-xs rounded-md border transition-colors cursor-pointer ${
                             dish.isAvailable
                               ? 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                               : 'bg-slate-900 text-white border-slate-900'
@@ -382,8 +389,20 @@ const ManageMenuPage = () => {
 
         {/* Модальное окно формы блюда */}
         {showDishModal && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto border border-slate-200">
+          <div 
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[100] p-4"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setShowDishModal(false);
+                setEditingDish(null);
+                setDishForm({ name: '', description: '', price: '', categoryId: '' });
+              }
+            }}
+          >
+            <div 
+              className="bg-white rounded-xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto border border-slate-200"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div className="p-6">
                 <h2 className="text-xl font-medium text-slate-900 mb-4 tracking-tight">
                   {editingDish ? 'Редактировать блюдо' : 'Добавить блюдо'}
@@ -452,18 +471,20 @@ const ManageMenuPage = () => {
 
                 <div className="flex gap-2 mt-6">
                   <button
+                    type="button"
                     onClick={handleSaveDish}
-                    className="flex-1 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium"
+                    className="flex-1 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium cursor-pointer"
                   >
                     Сохранить
                   </button>
                   <button
+                    type="button"
                     onClick={() => {
                       setShowDishModal(false);
                       setEditingDish(null);
                       setDishForm({ name: '', description: '', price: '', categoryId: '' });
                     }}
-                    className="flex-1 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium"
+                    className="flex-1 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium cursor-pointer"
                   >
                     Отмена
                   </button>
@@ -475,8 +496,20 @@ const ManageMenuPage = () => {
 
         {/* Модальное окно формы категории */}
         {showCategoryModal && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl shadow-xl max-w-md w-full border border-slate-200">
+          <div 
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[100] p-4"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setShowCategoryModal(false);
+                setEditingCategory(null);
+                setCategoryForm({ name: '', description: '', icon: '' });
+              }
+            }}
+          >
+            <div 
+              className="bg-white rounded-xl shadow-xl max-w-md w-full border border-slate-200"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div className="p-6">
                 <h2 className="text-xl font-medium text-slate-900 mb-4 tracking-tight">
                   {editingCategory ? 'Редактировать категорию' : 'Добавить категорию'}
@@ -528,18 +561,20 @@ const ManageMenuPage = () => {
 
                 <div className="flex gap-2 mt-6">
                   <button
+                    type="button"
                     onClick={handleSaveCategory}
-                    className="flex-1 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium"
+                    className="flex-1 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium cursor-pointer"
                   >
                     Сохранить
                   </button>
                   <button
+                    type="button"
                     onClick={() => {
                       setShowCategoryModal(false);
                       setEditingCategory(null);
                       setCategoryForm({ name: '', description: '', icon: '' });
                     }}
-                    className="flex-1 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium"
+                    className="flex-1 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium cursor-pointer"
                   >
                     Отмена
                   </button>
@@ -551,22 +586,34 @@ const ManageMenuPage = () => {
 
         {/* Подтверждение удаления блюда */}
         {showDeleteDishConfirm && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 border border-slate-200">
+          <div 
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[100] p-4"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setShowDeleteDishConfirm(null);
+              }
+            }}
+          >
+            <div 
+              className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 border border-slate-200"
+              onClick={(e) => e.stopPropagation()}
+            >
               <h3 className="text-lg font-medium text-slate-900 mb-4">Удалить блюдо?</h3>
               <p className="text-slate-600 mb-6">
                 Вы уверены, что хотите удалить это блюдо? Это действие нельзя отменить.
               </p>
               <div className="flex gap-2">
                 <button
+                  type="button"
                   onClick={() => handleDeleteDish(showDeleteDishConfirm)}
-                  className="flex-1 px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors font-medium"
+                  className="flex-1 px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors font-medium cursor-pointer"
                 >
                   Удалить
                 </button>
                 <button
+                  type="button"
                   onClick={() => setShowDeleteDishConfirm(null)}
-                  className="flex-1 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium"
+                  className="flex-1 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium cursor-pointer"
                 >
                   Отмена
                 </button>
@@ -577,22 +624,34 @@ const ManageMenuPage = () => {
 
         {/* Подтверждение удаления категории */}
         {showDeleteCategoryConfirm && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 border border-slate-200">
+          <div 
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[100] p-4"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setShowDeleteCategoryConfirm(null);
+              }
+            }}
+          >
+            <div 
+              className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 border border-slate-200"
+              onClick={(e) => e.stopPropagation()}
+            >
               <h3 className="text-lg font-medium text-slate-900 mb-4">Удалить категорию?</h3>
               <p className="text-slate-600 mb-6">
                 Вы уверены, что хотите удалить эту категорию? Это действие нельзя отменить.
               </p>
               <div className="flex gap-2">
                 <button
+                  type="button"
                   onClick={() => handleDeleteCategory(showDeleteCategoryConfirm)}
-                  className="flex-1 px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors font-medium"
+                  className="flex-1 px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors font-medium cursor-pointer"
                 >
                   Удалить
                 </button>
                 <button
+                  type="button"
                   onClick={() => setShowDeleteCategoryConfirm(null)}
-                  className="flex-1 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium"
+                  className="flex-1 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-medium cursor-pointer"
                 >
                   Отмена
                 </button>

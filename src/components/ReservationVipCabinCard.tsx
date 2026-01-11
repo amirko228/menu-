@@ -71,15 +71,17 @@ const ReservationVipCabinCard = ({
       <div className="flex gap-2 mt-auto">
         {!isReserved ? (
           <button
+            type="button"
             onClick={onReserve}
-            className="flex-1 px-3 py-2 bg-slate-900 text-white text-xs rounded-lg hover:bg-slate-800 transition-colors font-medium"
+            className="flex-1 px-3 py-2 bg-slate-900 text-white text-xs rounded-lg hover:bg-slate-800 transition-colors font-medium cursor-pointer"
           >
             Забронировать
           </button>
         ) : (
           <button
+            type="button"
             onClick={onFree}
-            className="flex-1 px-3 py-2 bg-emerald-600 text-white text-xs rounded-lg hover:bg-emerald-700 transition-colors font-medium"
+            className="flex-1 px-3 py-2 bg-emerald-600 text-white text-xs rounded-lg hover:bg-emerald-700 transition-colors font-medium cursor-pointer"
           >
             Освободить
           </button>
