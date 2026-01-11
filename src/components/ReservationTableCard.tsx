@@ -1,5 +1,6 @@
 import { Table } from '../models/Table';
 import { getTableStatusColor, getTableStatusText } from '../utils/statusColors';
+import { TableIcon } from './icons/Icons';
 
 interface ReservationTableCardProps {
   table: Table;
@@ -24,39 +25,44 @@ const ReservationTableCard = ({
   return (
     <div
       className={`
-        relative bg-white rounded-lg border border-gray-200 p-4
-        transition-all hover:border-gray-300 hover:shadow-sm
+        relative bg-white rounded-xl border border-slate-200 p-4
+        transition-all hover:border-slate-300
         min-w-[160px] min-h-[160px] flex flex-col
       `}
     >
       {/* Индикатор статуса */}
-      <div className={`absolute top-2 right-2 w-3 h-3 rounded-full ${statusColor}`} />
+      <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${statusColor.split(' ')[0]}`} />
+
+      {/* Иконка стола */}
+      <div className="mb-2 text-slate-400 flex justify-center">
+        <TableIcon className="w-5 h-5" />
+      </div>
 
       {/* Номер стола */}
-      <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">{table.name}</h3>
+      <h3 className="text-base font-semibold text-slate-900 mb-2 text-center">{table.name}</h3>
 
       {/* Статус */}
       <span
-        className={`text-xs px-2 py-1 rounded-full ${statusColor} text-white font-medium mb-2 text-center`}
+        className={`text-xs px-2.5 py-1 rounded-md border font-medium mb-2 text-center ${statusColor}`}
       >
         {statusText}
       </span>
 
       {/* Время брони, если забронирован */}
       {isReserved && reservationTime && (
-        <div className="text-xs text-blue-600 font-medium mb-2 text-center">
+        <div className="text-xs text-sky-600 font-medium mb-2 text-center">
           {reservationTime}
         </div>
       )}
 
       {/* Вместимость */}
-      <div className="text-sm text-gray-600 mb-3 text-center">
+      <div className="text-sm text-slate-600 mb-3 text-center">
         <span className="font-medium">{table.capacity}</span> мест
       </div>
 
       {/* Расположение */}
       {table.location && (
-        <div className="text-xs text-gray-500 mb-3 text-center">{table.location}</div>
+        <div className="text-xs text-slate-500 mb-3 text-center">{table.location}</div>
       )}
 
       {/* Кнопки управления */}
@@ -64,14 +70,14 @@ const ReservationTableCard = ({
         {!isReserved ? (
           <button
             onClick={onReserve}
-            className="flex-1 px-3 py-2 bg-blue-600 text-white text-xs rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            className="flex-1 px-3 py-2 bg-slate-900 text-white text-xs rounded-lg hover:bg-slate-800 transition-colors font-medium"
           >
             Забронировать
           </button>
         ) : (
           <button
             onClick={onFree}
-            className="flex-1 px-3 py-2 bg-green-600 text-white text-xs rounded-lg hover:bg-green-700 transition-colors font-medium"
+            className="flex-1 px-3 py-2 bg-emerald-600 text-white text-xs rounded-lg hover:bg-emerald-700 transition-colors font-medium"
           >
             Освободить
           </button>

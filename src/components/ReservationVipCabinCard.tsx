@@ -1,5 +1,6 @@
 import { VipCabin } from '../models/VipCabin';
 import { getVipCabinStatusColor, getVipCabinStatusText } from '../utils/statusColors';
+import { VipIcon } from './icons/Icons';
 
 interface ReservationVipCabinCardProps {
   cabin: VipCabin;
@@ -24,42 +25,44 @@ const ReservationVipCabinCard = ({
   return (
     <div
       className={`
-        relative bg-white rounded-lg border border-gray-200 p-4
-        transition-all hover:border-gray-300 hover:shadow-sm
+        relative bg-white rounded-xl border border-slate-200 p-4
+        transition-all hover:border-slate-300
         min-w-[180px] min-h-[180px] flex flex-col
       `}
     >
       {/* Индикатор статуса */}
-      <div className={`absolute top-2 right-2 w-3 h-3 rounded-full ${statusColor}`} />
+      <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${statusColor.split(' ')[0]}`} />
 
       {/* Иконка VIP */}
-      <div className="text-2xl mb-2 text-center">⭐</div>
+      <div className="mb-2 text-amber-500 flex justify-center">
+        <VipIcon className="w-5 h-5" />
+      </div>
 
       {/* Название кабины */}
-      <h3 className="text-lg font-semibold text-gray-900 mb-2 text-center">{cabin.name}</h3>
+      <h3 className="text-base font-semibold text-slate-900 mb-2 text-center">{cabin.name}</h3>
 
       {/* Статус */}
       <span
-        className={`text-xs px-2 py-1 rounded-full ${statusColor} text-white font-medium mb-2 text-center`}
+        className={`text-xs px-2.5 py-1 rounded-md border font-medium mb-2 text-center ${statusColor}`}
       >
         {statusText}
       </span>
 
       {/* Время брони, если забронирована */}
       {isReserved && reservationTime && (
-        <div className="text-xs text-purple-600 font-medium mb-2 text-center">
+        <div className="text-xs text-sky-600 font-medium mb-2 text-center">
           {reservationTime}
         </div>
       )}
 
       {/* Вместимость */}
-      <div className="text-sm text-gray-700 mb-2 text-center">
+      <div className="text-sm text-slate-600 mb-2 text-center">
         <span className="font-medium">{cabin.capacity}</span> мест
       </div>
 
       {/* Стоимость за час, если указана */}
       {cabin.pricePerHour && (
-        <div className="text-xs text-gray-500 mb-3 text-center">
+        <div className="text-xs text-slate-500 mb-3 text-center">
           {cabin.pricePerHour} ₽/час
         </div>
       )}
@@ -69,14 +72,14 @@ const ReservationVipCabinCard = ({
         {!isReserved ? (
           <button
             onClick={onReserve}
-            className="flex-1 px-3 py-2 bg-purple-600 text-white text-xs rounded-lg hover:bg-purple-700 transition-colors font-medium"
+            className="flex-1 px-3 py-2 bg-slate-900 text-white text-xs rounded-lg hover:bg-slate-800 transition-colors font-medium"
           >
             Забронировать
           </button>
         ) : (
           <button
             onClick={onFree}
-            className="flex-1 px-3 py-2 bg-green-600 text-white text-xs rounded-lg hover:bg-green-700 transition-colors font-medium"
+            className="flex-1 px-3 py-2 bg-emerald-600 text-white text-xs rounded-lg hover:bg-emerald-700 transition-colors font-medium"
           >
             Освободить
           </button>

@@ -23,3 +23,5 @@ export { default as InstallPWA } from './InstallPWA';
 export { default as Button } from './ui/Button';
 export { default as Card } from './ui/Card';
 
+// Иконки
+export * from './icons/Icons';

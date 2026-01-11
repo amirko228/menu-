@@ -194,18 +194,18 @@ const ReservationsPage = () => {
   }, [tables]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-50">
       <Header />
 
       <main className="container mx-auto px-4 py-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Бронирование</h1>
+        <h1 className="text-2xl sm:text-3xl font-medium text-slate-900 tracking-tight mb-6">Бронирование</h1>
 
         {/* Столы */}
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-700 mb-4">Столы</h2>
+          <h2 className="text-lg font-medium text-slate-900 mb-4">Столы</h2>
           {Object.entries(tablesByLocation).map(([location, locationTables]) => (
             <div key={location} className="mb-6">
-              <h3 className="text-lg font-medium text-gray-600 mb-3">{location}</h3>
+              <h3 className="text-base font-medium text-slate-700 mb-3">{location}</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 {(locationTables as Table[]).map((table) => (
                   <ReservationTableCard
@@ -223,7 +223,7 @@ const ReservationsPage = () => {
 
         {/* VIP-кабины */}
         <section>
-          <h2 className="text-2xl font-semibold text-gray-700 mb-4">VIP-кабины</h2>
+          <h2 className="text-lg font-medium text-slate-900 mb-4">VIP-кабины</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {vipCabins.map((cabin: VipCabin) => (
               <ReservationVipCabinCard

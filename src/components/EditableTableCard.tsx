@@ -1,6 +1,7 @@
 import { Table } from '../models/Table';
 import { getTableStatusColor, getTableStatusText } from '../utils/statusColors';
 import { useTouchDrag } from '../hooks/useTouchDrag';
+import { TableIcon, EditIcon, TrashIcon } from './icons/Icons';
 
 interface EditableTableCardProps {
   table: Table;
@@ -67,61 +68,66 @@ const EditableTableCard = ({
       onTouchEnd={isEditMode ? handleTouchEnd : undefined}
       onClick={onClick}
       className={`
-        relative bg-white rounded-xl shadow-md p-4
-        transition-all hover:shadow-lg
-        border-2 ${isEditMode ? 'border-blue-300 cursor-move' : 'border-transparent'}
-        ${isEditMode ? 'hover:border-blue-500' : 'hover:border-amber-300'}
+        relative bg-white rounded-xl p-5
+        transition-all
+        border ${isEditMode ? 'border-sky-300 cursor-move' : 'border-slate-200'}
+        ${isEditMode ? 'hover:border-sky-400' : 'hover:border-slate-300'}
         min-w-[140px] min-h-[120px] flex flex-col items-center justify-center
-        ${isEditMode ? '' : 'cursor-pointer hover:scale-105'}
+        ${isEditMode ? '' : 'cursor-pointer'}
       `}
     >
       {/* Индикатор статуса */}
-      <div className={`absolute top-2 right-2 w-3 h-3 rounded-full ${statusColor}`} />
+      <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${statusColor.split(' ')[0]}`} />
 
       {/* Кнопки редактирования/удаления в режиме редактирования */}
       {isEditMode && (
-        <div className="absolute top-2 left-2 flex gap-1">
+        <div className="absolute top-3 left-3 flex gap-1.5">
           <button
             onClick={(e) => {
               e.stopPropagation();
               onEdit(table.id);
             }}
-            className="p-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs"
+            className="p-1.5 bg-sky-100 text-sky-700 rounded-lg hover:bg-sky-200 border border-sky-200 transition-colors"
             title="Редактировать"
           >
-            ✏️
+            <EditIcon className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={(e) => {
               e.stopPropagation();
               onDelete(table.id);
             }}
-            className="p-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs"
+            className="p-1.5 bg-rose-100 text-rose-700 rounded-lg hover:bg-rose-200 border border-rose-200 transition-colors"
             title="Удалить"
           >
-            🗑️
+            <TrashIcon className="w-3.5 h-3.5" />
           </button>
         </div>
       )}
 
+      {/* Иконка стола */}
+      <div className="mb-2 text-slate-400">
+        <TableIcon className="w-6 h-6" />
+      </div>
+
       {/* Название стола */}
-      <h3 className="text-lg font-bold text-gray-800 mb-1">{table.name}</h3>
+      <h3 className="text-base font-semibold text-slate-900 mb-2">{table.name}</h3>
 
       {/* Статус */}
       <span
-        className={`text-xs px-2 py-1 rounded-full ${statusColor} text-white font-medium mb-2`}
+        className={`text-xs px-2.5 py-1 rounded-md border font-medium mb-2 ${statusColor}`}
       >
         {statusText}
       </span>
 
       {/* Вместимость */}
-      <div className="text-sm text-gray-600">
+      <div className="text-sm text-slate-600">
         <span className="font-medium">{table.capacity}</span> мест
       </div>
 
       {/* Расположение, если указано */}
       {table.location && (
-        <div className="text-xs text-gray-500 mt-1">{table.location}</div>
+        <div className="text-xs text-slate-500 mt-1">{table.location}</div>
       )}
 
       {/* Индикатор drag в режиме редактирования */}

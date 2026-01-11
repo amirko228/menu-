@@ -6,11 +6,11 @@ import { VipCabinStatus } from '../models/VipCabin';
  */
 export const getTableStatusColor = (status: TableStatus): string => {
   const colors: Record<TableStatus, string> = {
-    free: 'bg-green-500', // Свободен - зеленый
-    occupied: 'bg-red-500', // Занят - красный
-    reserved: 'bg-blue-500', // Забронирован - синий
-    waiting_payment: 'bg-yellow-500', // Ожидает оплату - желтый
-    closed: 'bg-gray-400', // Закрыт - серый
+    free: 'bg-emerald-100 text-emerald-700 border-emerald-200', // Свободен - спокойный зеленый
+    occupied: 'bg-rose-100 text-rose-700 border-rose-200', // Занят - спокойный розовый
+    reserved: 'bg-sky-100 text-sky-700 border-sky-200', // Забронирован - спокойный голубой
+    waiting_payment: 'bg-amber-100 text-amber-700 border-amber-200', // Ожидает оплату - спокойный янтарный
+    closed: 'bg-slate-100 text-slate-600 border-slate-200', // Закрыт - спокойный серый
   };
   return colors[status];
 };
@@ -20,10 +20,10 @@ export const getTableStatusColor = (status: TableStatus): string => {
  */
 export const getVipCabinStatusColor = (status: VipCabinStatus): string => {
   const colors: Record<VipCabinStatus, string> = {
-    free: 'bg-green-500', // Свободна - зеленый
-    occupied: 'bg-red-500', // Занята - красный
-    reserved: 'bg-blue-500', // Забронирована - синий
-    maintenance: 'bg-gray-400', // Обслуживание - серый
+    free: 'bg-emerald-100 text-emerald-700 border-emerald-200', // Свободна - спокойный зеленый
+    occupied: 'bg-rose-100 text-rose-700 border-rose-200', // Занята - спокойный розовый
+    reserved: 'bg-sky-100 text-sky-700 border-sky-200', // Забронирована - спокойный голубой
+    maintenance: 'bg-slate-100 text-slate-600 border-slate-200', // Обслуживание - спокойный серый
   };
   return colors[status];
 };

@@ -137,16 +137,16 @@ const OrderForm = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col border border-slate-200">
         {/* Заголовок */}
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-gray-900">
+        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+          <h2 className="text-xl font-medium text-slate-900 tracking-tight">
             {order ? 'Редактировать заказ' : 'Новый заказ'}
           </h2>
           <button
             onClick={onCancel}
-            className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+            className="text-slate-400 hover:text-slate-600 text-2xl leading-none transition-colors"
           >
             ×
           </button>
@@ -156,7 +156,7 @@ const OrderForm = ({
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {/* Выбор стола/кабины */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Стол или VIP-кабина
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -167,7 +167,7 @@ const OrderForm = ({
                     setSelectedTableId(e.target.value);
                     setSelectedVipCabinId('');
                   }}
-                  className="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 bg-white text-slate-900"
                 >
                   <option value="">Выберите стол</option>
                   {tables.map((table) => (
@@ -184,7 +184,7 @@ const OrderForm = ({
                     setSelectedVipCabinId(e.target.value);
                     setSelectedTableId('');
                   }}
-                  className="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 bg-white text-slate-900"
                 >
                   <option value="">Выберите VIP-кабину</option>
                   {vipCabins.map((cabin) => (
@@ -200,13 +200,13 @@ const OrderForm = ({
           {/* Статус (только при редактировании) */}
           {order && (
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Статус
               </label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as Order['status'])}
-                className="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 bg-white text-slate-900"
               >
                 <option value="new">Новый</option>
                 <option value="in_progress">Готовится</option>
@@ -221,19 +221,19 @@ const OrderForm = ({
           {/* Позиции заказа */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <label className="block text-sm font-semibold text-gray-700">
+              <label className="block text-sm font-medium text-slate-700">
                 Позиции заказа ({items.length})
               </label>
               <button
                 onClick={() => setShowDishSelector(true)}
-                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition-colors"
+                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-lg transition-colors"
               >
                 + Добавить блюдо
               </button>
             </div>
 
             {items.length === 0 ? (
-              <div className="text-center py-8 text-gray-400">
+              <div className="text-center py-8 text-slate-400">
                 Нет позиций в заказе
               </div>
             ) : (
@@ -241,35 +241,35 @@ const OrderForm = ({
                 {items.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                    className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200"
                   >
                     <div className="flex-1">
-                      <div className="font-semibold text-gray-900">
+                      <div className="font-medium text-slate-900">
                         {item.dishName}
                       </div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-slate-600">
                         {item.price} ₽ × {item.quantity} = {item.price * item.quantity} ₽
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => handleQuantityChange(item.id, -1)}
-                        className="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-lg font-bold text-gray-700"
+                        className="w-8 h-8 bg-slate-200 hover:bg-slate-300 rounded-lg font-bold text-slate-700 transition-colors"
                       >
                         −
                       </button>
-                      <span className="w-8 text-center font-semibold">
+                      <span className="w-8 text-center font-medium">
                         {item.quantity}
                       </span>
                       <button
                         onClick={() => handleQuantityChange(item.id, 1)}
-                        className="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-lg font-bold text-gray-700"
+                        className="w-8 h-8 bg-slate-200 hover:bg-slate-300 rounded-lg font-bold text-slate-700 transition-colors"
                       >
                         +
                       </button>
                       <button
                         onClick={() => handleRemoveItem(item.id)}
-                        className="ml-2 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold"
+                        className="ml-2 px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-sm font-medium transition-colors"
                       >
                         Удалить
                       </button>
@@ -282,25 +282,25 @@ const OrderForm = ({
 
           {/* Заметки */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Заметки
             </label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Дополнительная информация о заказе..."
-              className="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent resize-none"
+              className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 resize-none bg-white text-slate-900"
               rows={3}
             />
           </div>
 
           {/* Итоговая сумма */}
-          <div className="pt-4 border-t-2 border-gray-200">
+          <div className="pt-4 border-t border-slate-200">
             <div className="flex items-center justify-between">
-              <span className="text-lg font-semibold text-gray-700">
+              <span className="text-lg font-medium text-slate-700">
                 Итого:
               </span>
-              <span className="text-2xl font-bold text-gray-900">
+              <span className="text-2xl font-semibold text-slate-900">
                 {totalAmount} ₽
               </span>
             </div>
@@ -308,16 +308,16 @@ const OrderForm = ({
         </div>
 
         {/* Кнопки */}
-        <div className="px-6 py-4 border-t border-gray-200 flex gap-3">
+        <div className="px-6 py-4 border-t border-slate-200 flex gap-3">
           <button
             onClick={onCancel}
-            className="flex-1 px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg transition-colors"
+            className="flex-1 px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-lg transition-colors"
           >
             Отмена
           </button>
           <button
             onClick={handleSave}
-            className="flex-1 px-4 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition-colors"
+            className="flex-1 px-4 py-3 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-lg transition-colors"
           >
             {order ? 'Сохранить' : 'Создать заказ'}
           </button>
@@ -326,32 +326,32 @@ const OrderForm = ({
 
       {/* Модальное окно выбора блюд */}
       {showDishSelector && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-[60] flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[80vh] overflow-hidden flex flex-col">
-            <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-              <h3 className="text-lg font-bold text-gray-900">Выберите блюдо</h3>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[80vh] overflow-hidden flex flex-col border border-slate-200">
+            <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+              <h3 className="text-lg font-medium text-slate-900 tracking-tight">Выберите блюдо</h3>
               <button
                 onClick={() => {
                   setShowDishSelector(false);
                   setSearchQuery('');
                 }}
-                className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+                className="text-slate-400 hover:text-slate-600 text-2xl leading-none transition-colors"
               >
                 ×
               </button>
             </div>
-            <div className="p-4 border-b border-gray-200">
+            <div className="p-4 border-b border-slate-200">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Поиск блюда..."
-                className="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 bg-white text-slate-900"
               />
             </div>
             <div className="flex-1 overflow-y-auto p-4">
               {availableDishes.length === 0 ? (
-                <div className="text-center py-8 text-gray-400">
+                <div className="text-center py-8 text-slate-400">
                   Блюда не найдены
                 </div>
               ) : (
@@ -360,18 +360,18 @@ const OrderForm = ({
                     <button
                       key={dish.id}
                       onClick={() => handleAddDish(dish)}
-                      className="w-full text-left p-3 bg-gray-50 hover:bg-amber-50 rounded-lg transition-colors border-2 border-transparent hover:border-amber-300"
+                      className="w-full text-left p-3 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors border border-transparent hover:border-slate-300"
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="font-semibold text-gray-900">
+                          <div className="font-medium text-slate-900">
                             {dish.name}
                           </div>
-                          <div className="text-sm text-gray-600">
+                          <div className="text-sm text-slate-600">
                             {dish.price} ₽
                           </div>
                         </div>
-                        <span className="text-amber-500 text-xl">+</span>
+                        <span className="text-slate-500 text-xl">+</span>
                       </div>
                     </button>
                   ))}

@@ -139,10 +139,8 @@ const OrdersPage = () => {
 
   // Удаление заказа
   const handleDeleteOrder = (orderId: string) => {
-    if (confirm('Вы уверены, что хотите удалить этот заказ?')) {
-      ordersRepository.delete(orderId);
-      loadData();
-    }
+    ordersRepository.delete(orderId);
+    loadData();
   };
 
   // Статистика
@@ -154,19 +152,19 @@ const OrdersPage = () => {
     .reduce((sum, o) => sum + o.totalAmount, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-50">
       <Header />
 
       <main className="container mx-auto px-4 py-6">
         {/* Заголовок и статистика */}
         <div className="mb-6">
-          <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+          <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
+            <h1 className="text-2xl sm:text-3xl font-medium text-slate-900 tracking-tight">
               Заказы
             </h1>
             <button
               onClick={handleCreateOrder}
-              className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition-colors shadow-md active:scale-[0.97]"
+              className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-lg transition-colors active:scale-[0.97]"
             >
               + Новый заказ
             </button>
@@ -174,21 +172,21 @@ const OrdersPage = () => {
 
           {/* Статистика */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
-            <div className="bg-white rounded-xl shadow-md p-4 border-2 border-gray-200">
-              <div className="text-sm text-gray-600 mb-1">Активных заказов</div>
-              <div className="text-2xl font-bold text-gray-900">
+            <div className="bg-white rounded-xl p-4 border border-slate-200">
+              <div className="text-xs text-slate-500 mb-1.5 uppercase tracking-wide">Активных</div>
+              <div className="text-2xl font-semibold text-slate-900">
                 {activeOrdersCount}
               </div>
             </div>
-            <div className="bg-white rounded-xl shadow-md p-4 border-2 border-gray-200">
-              <div className="text-sm text-gray-600 mb-1">Всего заказов</div>
-              <div className="text-2xl font-bold text-gray-900">
+            <div className="bg-white rounded-xl p-4 border border-slate-200">
+              <div className="text-xs text-slate-500 mb-1.5 uppercase tracking-wide">Всего</div>
+              <div className="text-2xl font-semibold text-slate-900">
                 {orders.length}
               </div>
             </div>
-            <div className="bg-white rounded-xl shadow-md p-4 border-2 border-gray-200 col-span-2 sm:col-span-1">
-              <div className="text-sm text-gray-600 mb-1">Выручка (оплачено)</div>
-              <div className="text-2xl font-bold text-amber-600">
+            <div className="bg-white rounded-xl p-4 border border-slate-200 col-span-2 sm:col-span-1">
+              <div className="text-xs text-slate-500 mb-1.5 uppercase tracking-wide">Выручка</div>
+              <div className="text-2xl font-semibold text-slate-900">
                 {totalRevenue} ₽
               </div>
             </div>
@@ -198,60 +196,60 @@ const OrdersPage = () => {
           <div className="flex gap-2 flex-wrap">
             <button
               onClick={() => setFilterStatus('all')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filterStatus === 'all'
-                  ? 'bg-gray-900 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
+                  ? 'bg-slate-900 text-white'
+                  : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
               }`}
             >
               Все
             </button>
             <button
               onClick={() => setFilterStatus('new')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filterStatus === 'new'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
+                  ? 'bg-sky-100 text-sky-700 border border-sky-200'
+                  : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
               }`}
             >
               Новые
             </button>
             <button
               onClick={() => setFilterStatus('in_progress')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filterStatus === 'in_progress'
-                  ? 'bg-yellow-500 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
+                  ? 'bg-amber-100 text-amber-700 border border-amber-200'
+                  : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
               }`}
             >
               Готовятся
             </button>
             <button
               onClick={() => setFilterStatus('ready')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filterStatus === 'ready'
-                  ? 'bg-green-500 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
+                  ? 'bg-emerald-100 text-emerald-700 border border-emerald-200'
+                  : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
               }`}
             >
               Готовы
             </button>
             <button
               onClick={() => setFilterStatus('served')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filterStatus === 'served'
-                  ? 'bg-purple-500 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
+                  ? 'bg-violet-100 text-violet-700 border border-violet-200'
+                  : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
               }`}
             >
               Подано
             </button>
             <button
               onClick={() => setFilterStatus('paid')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filterStatus === 'paid'
-                  ? 'bg-gray-500 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
+                  ? 'bg-slate-100 text-slate-700 border border-slate-200'
+                  : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
               }`}
             >
               Оплачено
@@ -261,12 +259,11 @@ const OrdersPage = () => {
 
         {/* Список заказов */}
         {sortedOrders.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-xl shadow-md border-2 border-gray-200">
-            <div className="text-6xl mb-4">📋</div>
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
+          <div className="text-center py-16 bg-white rounded-xl border border-slate-200">
+            <h3 className="text-lg font-medium text-slate-700 mb-2">
               Нет заказов
             </h3>
-            <p className="text-gray-500 mb-6">
+            <p className="text-sm text-slate-500 mb-6">
               {filterStatus === 'all'
                 ? 'Создайте первый заказ, нажав кнопку "Новый заказ"'
                 : 'Нет заказов с выбранным статусом'}
@@ -274,7 +271,7 @@ const OrdersPage = () => {
             {filterStatus === 'all' && (
               <button
                 onClick={handleCreateOrder}
-                className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition-colors"
+                className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-lg transition-colors"
               >
                 + Создать заказ
               </button>
@@ -288,17 +285,8 @@ const OrdersPage = () => {
                   order={order}
                   onClick={() => handleEditOrder(order)}
                   onStatusChange={handleStatusChange}
+                  onDelete={() => handleDeleteOrder(order.id)}
                 />
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteOrder(order.id);
-                  }}
-                  className="absolute top-2 right-2 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold opacity-0 hover:opacity-100 transition-opacity"
-                  title="Удалить заказ"
-                >
-                  ×
-                </button>
               </div>
             ))}
           </div>

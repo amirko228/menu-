@@ -17,11 +17,11 @@ const CategorySection = ({ category, dishes }: CategorySectionProps) => {
   return (
     <section className="mb-8">
       <div className="flex items-center gap-3 mb-4">
-        {category.icon && <span className="text-3xl">{category.icon}</span>}
+        {category.icon && <span className="text-2xl">{category.icon}</span>}
         <div>
-          <h2 className="text-2xl font-bold text-gray-800">{category.name}</h2>
+          <h2 className="text-xl font-medium text-slate-900 tracking-tight">{category.name}</h2>
           {category.description && (
-            <p className="text-sm text-gray-600">{category.description}</p>
+            <p className="text-sm text-slate-600 mt-1">{category.description}</p>
           )}
         </div>
       </div>

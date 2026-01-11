@@ -6,19 +6,19 @@ import { OrderStatus } from '../models/Order';
 export const getOrderStatusColor = (status: OrderStatus): string => {
   switch (status) {
     case 'new':
-      return 'bg-blue-500';
+      return 'bg-sky-100 text-sky-700 border-sky-200';
     case 'in_progress':
-      return 'bg-yellow-500';
+      return 'bg-amber-100 text-amber-700 border-amber-200';
     case 'ready':
-      return 'bg-green-500';
+      return 'bg-emerald-100 text-emerald-700 border-emerald-200';
     case 'served':
-      return 'bg-purple-500';
+      return 'bg-violet-100 text-violet-700 border-violet-200';
     case 'paid':
-      return 'bg-gray-500';
+      return 'bg-slate-100 text-slate-700 border-slate-200';
     case 'cancelled':
-      return 'bg-red-500';
+      return 'bg-rose-100 text-rose-700 border-rose-200';
     default:
-      return 'bg-gray-400';
+      return 'bg-slate-100 text-slate-600 border-slate-200';
   }
 };
 

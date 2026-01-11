@@ -274,36 +274,36 @@ const TablesPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-50">
       <Header />
 
       <main className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Схема зала</h2>
+          <h2 className="text-2xl font-medium text-slate-900 tracking-tight">Схема зала</h2>
           <div className="flex gap-2">
             {isEditMode ? (
               <>
                 <button
                   onClick={() => setShowAddTableForm(true)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                  className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium text-sm"
                 >
                   + Стол
                 </button>
                 <button
                   onClick={() => setShowAddVipCabinForm(true)}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium"
+                  className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium text-sm"
                 >
                   + VIP-кабина
                 </button>
                 <button
                   onClick={handleSave}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
+                  className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors font-medium text-sm"
                 >
                   Сохранить
                 </button>
                 <button
                   onClick={() => setIsEditMode(false)}
-                  className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium"
+                  className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors font-medium text-sm"
                 >
                   Отмена
                 </button>
@@ -311,7 +311,7 @@ const TablesPage = () => {
             ) : (
               <button
                 onClick={() => setIsEditMode(true)}
-                className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors font-medium"
+                className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium text-sm"
               >
                 Изменить схему
               </button>
@@ -320,8 +320,8 @@ const TablesPage = () => {
         </div>
 
         {isEditMode && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-            <p className="text-blue-800 text-sm">
+          <div className="bg-sky-50 border border-sky-200 rounded-lg p-4 mb-6">
+            <p className="text-sky-800 text-sm">
               <strong>Режим редактирования:</strong> Перетаскивайте столы и VIP-кабины для изменения их позиции.
               Используйте кнопки редактирования и удаления на карточках.
             </p>
@@ -330,7 +330,7 @@ const TablesPage = () => {
 
         {/* Столы */}
         <section className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-700 mb-4">Столы</h3>
+          <h3 className="text-lg font-medium text-slate-900 mb-4">Столы</h3>
           <div
             ref={tablesContainerRef}
             onDrop={isEditMode ? handleTableDropContainer : undefined}
@@ -366,7 +366,7 @@ const TablesPage = () => {
 
         {/* VIP-кабины */}
         <section>
-          <h3 className="text-xl font-semibold text-gray-700 mb-4">VIP-кабины</h3>
+          <h3 className="text-lg font-medium text-slate-900 mb-4">VIP-кабины</h3>
           <div
             ref={vipCabinsContainerRef}
             onDrop={isEditMode ? handleCabinDropContainer : undefined}

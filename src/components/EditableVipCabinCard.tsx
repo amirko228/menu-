@@ -1,6 +1,7 @@
 import { VipCabin } from '../models/VipCabin';
 import { getVipCabinStatusColor, getVipCabinStatusText } from '../utils/statusColors';
 import { useTouchDrag } from '../hooks/useTouchDrag';
+import { VipIcon, EditIcon, TrashIcon } from './icons/Icons';
 
 interface EditableVipCabinCardProps {
   cabin: VipCabin;
@@ -67,69 +68,71 @@ const EditableVipCabinCard = ({
       onTouchEnd={isEditMode ? handleTouchEnd : undefined}
       onClick={onClick}
       className={`
-        relative bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl shadow-md p-4
-        transition-all hover:shadow-lg
-        border-2 ${isEditMode ? 'border-purple-400 cursor-move' : 'border-purple-200'}
-        ${isEditMode ? 'hover:border-purple-600' : 'hover:border-purple-400'}
+        relative bg-white rounded-xl p-5
+        transition-all
+        border ${isEditMode ? 'border-violet-300 cursor-move' : 'border-slate-200'}
+        ${isEditMode ? 'hover:border-violet-400' : 'hover:border-slate-300'}
         min-w-[160px] min-h-[140px] flex flex-col items-center justify-center
-        ${isEditMode ? '' : 'cursor-pointer hover:scale-105'}
+        ${isEditMode ? '' : 'cursor-pointer'}
       `}
     >
       {/* Индикатор статуса */}
-      <div className={`absolute top-2 right-2 w-3 h-3 rounded-full ${statusColor}`} />
+      <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${statusColor.split(' ')[0]}`} />
 
       {/* Кнопки редактирования/удаления в режиме редактирования */}
       {isEditMode && (
-        <div className="absolute top-2 left-2 flex gap-1">
+        <div className="absolute top-3 left-3 flex gap-1.5">
           <button
             onClick={(e) => {
               e.stopPropagation();
               onEdit(cabin.id);
             }}
-            className="p-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs"
+            className="p-1.5 bg-sky-100 text-sky-700 rounded-lg hover:bg-sky-200 border border-sky-200 transition-colors"
             title="Редактировать"
           >
-            ✏️
+            <EditIcon className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={(e) => {
               e.stopPropagation();
               onDelete(cabin.id);
             }}
-            className="p-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs"
+            className="p-1.5 bg-rose-100 text-rose-700 rounded-lg hover:bg-rose-200 border border-rose-200 transition-colors"
             title="Удалить"
           >
-            🗑️
+            <TrashIcon className="w-3.5 h-3.5" />
           </button>
         </div>
       )}
 
       {/* Иконка VIP */}
-      <div className="text-2xl mb-2">⭐</div>
+      <div className="mb-2 text-amber-500">
+        <VipIcon className="w-6 h-6" />
+      </div>
 
       {/* Название кабины */}
-      <h3 className="text-lg font-bold text-purple-800 mb-1">{cabin.name}</h3>
+      <h3 className="text-base font-semibold text-slate-900 mb-2">{cabin.name}</h3>
 
       {/* Статус */}
       <span
-        className={`text-xs px-2 py-1 rounded-full ${statusColor} text-white font-medium mb-2`}
+        className={`text-xs px-2.5 py-1 rounded-md border font-medium mb-2 ${statusColor}`}
       >
         {statusText}
       </span>
 
       {/* Вместимость */}
-      <div className="text-sm text-purple-700">
+      <div className="text-sm text-slate-600">
         <span className="font-medium">{cabin.capacity}</span> мест
       </div>
 
       {/* Стоимость за час, если указана */}
       {cabin.pricePerHour && (
-        <div className="text-xs text-purple-600 mt-1">{cabin.pricePerHour} ₽/час</div>
+        <div className="text-xs text-slate-500 mt-1">{cabin.pricePerHour} ₽/час</div>
       )}
 
       {/* Индикатор drag в режиме редактирования */}
       {isEditMode && (
-        <div className="absolute bottom-2 text-xs text-gray-400">Перетащите</div>
+        <div className="absolute bottom-2 text-xs text-slate-400">Перетащите</div>
       )}
     </div>
   );
